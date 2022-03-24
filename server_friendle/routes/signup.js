@@ -1,11 +1,13 @@
 const router = require("express").Router();
 const knex = require("knex")(require("../knex_db/knexfile").development);
+const bcrypt = require("bcryptjs");
 
 router.post("/", (req, res) => {
   const data = req.body;
   const { avatar, username, email, password } = data;
+  const hashedPassword = bcrypt.hashSync(password, 10);
   knex("users")
-    .insert({ avatar, username, email, password })
+    .insert({ avatar, username, email, password: hashedPassword })
     .then((id) => {
       knex("users")
         .select("id", "username")
