@@ -5,14 +5,24 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "migrate": "knex migrate:latest --knexfile knex_db/knexfile.js",
+    "seed": "knex seed:run --knexfile knex_db/knexfile.js",
+    "rollback": "knex migrate:rollback --knexfile knex_db/knexfile.js",
+    "down": "knex migrate:down --knexfile knex_db/knexfile.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.26.1",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
     "express": "^4.17.3",
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^1.0.4",
+    "mysql": "^2.18.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "morgan": "^1.10.0",
