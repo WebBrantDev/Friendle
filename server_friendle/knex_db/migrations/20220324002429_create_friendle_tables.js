@@ -30,6 +30,7 @@ exports.up = function (knex) {
     })
     .createTable("entries", (table) => {
       table.increments("id").primary();
+      // table.charset("utf8mb4");
       table
         .integer("user_id")
         .unsigned()
@@ -48,6 +49,7 @@ exports.up = function (knex) {
       table.integer("game_day", 15).notNullable();
       table.integer("num_of_guesses", 5).notNullable();
       table.string("guess_pattern", 255).notNullable();
+      // .collate("utf8_unicode_ci");
       table.timestamp("created_at").defaultTo(knex.fn.now());
     });
 };
