@@ -33,15 +33,16 @@ const userIconCall = (username) => {
 router.post("/", (req, res) => {
   const data = req.body;
   const { username, email, password } = data;
-  if (validate.emailCheck(email)) {
+  const formattedUsername = username.replace(/ /g, "_");
+  if (validate.emailCheck(email) && username) {
     const hashedPassword = bcrypt.hashSync(password, 10);
-    const avatar = userIconCall(username);
+    const avatar = userIconCall(formattedUsername);
     console.log(avatar);
     knex("users")
       .insert({ avatar, username, email, password: hashedPassword })
       .then((id) => {
         knex("users")
-          .select("id", "username")
+          .select("id", "username", "team_id")
           .where({ id })
           .then((user) => {
             return res.json(user[0]);
