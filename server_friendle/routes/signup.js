@@ -3,7 +3,7 @@ const knex = require("knex")(require("../knex_db/knexfile").development);
 const bcrypt = require("bcryptjs");
 const axios = require("axios");
 const fs = require("fs");
-const path = require("path");
+const validate = require("../utils/validators");
 
 // Generating a random seed for unique user icons
 const seedrandom = require("seedrandom");
@@ -33,23 +33,27 @@ const userIconCall = (username) => {
 router.post("/", (req, res) => {
   const data = req.body;
   const { username, email, password } = data;
-  const hashedPassword = bcrypt.hashSync(password, 10);
-  const avatar = userIconCall(username);
-  console.log(avatar);
-  knex("users")
-    .insert({ avatar, username, email, password: hashedPassword })
-    .then((id) => {
-      knex("users")
-        .select("id", "username")
-        .where({ id })
-        .then((user) => {
-          return res.json(user[0]);
-        });
-    })
-    .catch((err) => {
-      console.log(err);
-      return res.json({ msg: "Error" });
-    });
+  if (validate.emailCheck(email)) {
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    const avatar = userIconCall(username);
+    console.log(avatar);
+    knex("users")
+      .insert({ avatar, username, email, password: hashedPassword })
+      .then((id) => {
+        knex("users")
+          .select("id", "username")
+          .where({ id })
+          .then((user) => {
+            return res.json(user[0]);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.json({ msg: "Error" });
+      });
+  } else {
+    res.status(400).send("Email invalid");
+  }
 });
 
 module.exports = router;
