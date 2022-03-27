@@ -8,6 +8,9 @@ exports.up = function (knex) {
       table.increments("id").primary();
       table.string("daily_word", 20);
       table.string("game_type", 30).defaultTo("default");
+      table.string("team_name", 50).notNullable();
+      table.timestamp("created_at").defaultTo(knex.fn.now());
+      table.timestamp("updated_at").defaultTo(knex.fn.now());
     })
     .createTable("users", (table) => {
       table.increments("id").primary();
@@ -18,9 +21,9 @@ exports.up = function (knex) {
         .inTable("teams")
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
-      table.string("avatar", 255).notNullable();
+      table.string("avatar", 150).notNullable();
       table.string("username", 50).notNullable();
-      table.string("email", 50).notNullable();
+      table.string("email", 55).notNullable();
       table.string("password", 100);
       table.timestamp("created_at").defaultTo(knex.fn.now());
       table.timestamp("updated_at").defaultTo(knex.fn.now());
@@ -42,8 +45,8 @@ exports.up = function (knex) {
         .inTable("teams")
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
-      table.integer("game_day", 20).notNullable();
-      table.integer("num_of_guesses", 10).notNullable();
+      table.integer("game_day", 15).notNullable();
+      table.integer("num_of_guesses", 5).notNullable();
       table.string("guess_pattern", 255).notNullable();
       table.timestamp("created_at").defaultTo(knex.fn.now());
     });
