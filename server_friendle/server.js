@@ -11,7 +11,7 @@ const SERVER_PORT = process.env.SERVER_PORT || 8080;
 
 app.use(express.json());
 app.use(cors());
-app.use(morgan("tiny"));
+app.use(morgan("dev"));
 
 app.use("/signup", signupRoute);
 app.use("/createTeam", createTeamRoute);
