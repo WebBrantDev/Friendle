@@ -16,10 +16,11 @@ router.post("/", (req, res) => {
       console.log(user);
       if (bcrypt.compareSync(password, user[0].password)) {
         const { username, id, team_id } = user[0];
-        const token = jwt.sign({ username, id, team_id }, JWT_SECRET);
+        const token = jwt.sign({ username, id, team_id }, JWT_SECRET, {
+          expiresIn: "10d",
+        });
         console.log(`Token: ${token}`);
-        return res.send("yeah");
-        // return res.json({ token });
+        return res.json({ token });
       } else {
         return res.send("nope");
       }

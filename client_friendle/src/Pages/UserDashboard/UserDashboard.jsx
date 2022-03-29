@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./UserDashboard.scss";
 
-const UserDashboard = () => {
+const UserDashboard = (props) => {
   const [username, setUsername] = useState("");
   const [userId, setUserId] = useState("");
   const [teamId, setTeamId] = useState("");
 
   useEffect(() => {
+    console.log(props);
     axios
       .get("http://localhost:8080/user-dashboard", {
         headers: {
