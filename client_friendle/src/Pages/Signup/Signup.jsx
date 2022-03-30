@@ -44,7 +44,6 @@ const Signup = () => {
                   team_id,
                 })
                 .then((res) => {
-                  console.log(res);
                   navigate("/Login");
                 })
                 .catch((err) => {

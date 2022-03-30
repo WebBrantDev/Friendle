@@ -2,10 +2,10 @@ const router = require("express").Router();
 const knex = require("knex")(require("../knex_db/knexfile").development);
 
 router.post("/", (req, res) => {
-  const { guess_pattern, game_day, num_of_guesses, user_id } = req.body;
-  const team_id = req.body.team_id || null;
+  const { guess_pattern, game_day, num_of_guesses, user_id, team_id } =
+    req.body;
 
-  if (game_day && num_of_guesses && guess_pattern && user_id) {
+  if (game_day && num_of_guesses && guess_pattern && user_id && team_id) {
     knex("entries")
       .insert({ game_day, num_of_guesses, guess_pattern, user_id, team_id })
       .then((id) => {
