@@ -6,14 +6,14 @@ const outsideApi = require("../utils/outsideApiCalls");
 
 router.post("/", (req, res) => {
   const data = req.body;
-  const { username, email, password } = data;
+  const { username, email, password, team_id } = data;
   const formattedUsername = username.replace(/ /g, "_");
   if (validate.emailCheck(email) && username) {
     const hashedPassword = bcrypt.hashSync(password, 10);
     const avatar = outsideApi.userIconCall(formattedUsername);
     console.log(avatar);
     knex("users")
-      .insert({ avatar, username, email, password: hashedPassword })
+      .insert({ avatar, username, email, password: hashedPassword, team_id })
       .then((id) => {
         knex("users")
           .select("id", "username", "team_id")

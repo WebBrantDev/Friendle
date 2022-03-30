@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
     if (err) {
       return res.status(401).send("Invalid auth token");
     } else {
-      return res.json({ decoded });
+      return res.status(200).json({ decoded });
     }
   });
 });

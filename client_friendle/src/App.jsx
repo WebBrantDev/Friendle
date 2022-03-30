@@ -2,7 +2,8 @@ import React from "react";
 import "./App.scss";
 import Login from "./Pages/Login/Login";
 import Signup from "./Pages/Signup/Signup";
-import UserDashboard from "./Pages/UserDashboard/UserDashboard";
+import TeamDashboard from "./Pages/TeamDashboard/TeamDashboard";
+import CreateTeam from "./Pages/CreateTeam/CreateTeam";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -62,8 +63,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Signup />} />
-          <Route path="login" element={<Login />} />
-          <Route path="UserDashboard" element={<UserDashboard />} />
+          <Route path="/Signup/:id" element={<Signup />} />
+          <Route path="Login" element={<Login />} />
+          <Route path="TeamDashboard" element={<TeamDashboard />} />
+          <Route path="CreateTeam" element={<CreateTeam />} />
         </Routes>
         {/* <form onSubmit={handleSubmit}>
         <input type="text" name="wordle" />

@@ -13,7 +13,7 @@ const Login = () => {
     console.log(isMounted);
     if (localStorage.getItem("token")) {
       axios
-        .get("http://localhost:8080/user-dashboard", {
+        .get("http://localhost:8080/teamDashboard", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -21,7 +21,7 @@ const Login = () => {
         .then((res) => {
           if (isMounted) {
             setLoggedIn(true);
-            navigate("/UserDashboard");
+            navigate("/TeamDashboard");
           }
         })
         .catch((err) => {
@@ -42,7 +42,7 @@ const Login = () => {
         localStorage.setItem("token", token);
       })
       .then(() => {
-        navigate("/UserDashboard");
+        navigate("/TeamDashboard");
       })
       .catch((err) => {
         console.log(err);
