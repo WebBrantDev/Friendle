@@ -16,6 +16,7 @@ const TeamDashboard = (props) => {
     const url = `http://localhost:3000/Signup/${teamId}`;
     console.log(url);
     navigator.clipboard.writeText(url);
+    alert("Copied link to clipboard!");
   };
 
   const logoutHandler = (e) => {
@@ -35,7 +36,6 @@ const TeamDashboard = (props) => {
         })
         .then((res) => {
           const { username, id, team_id } = res.data.decoded;
-          console.log("woo");
           setUsername(username);
           setUserId(id);
           setTeamId(team_id);
@@ -47,17 +47,32 @@ const TeamDashboard = (props) => {
     }
   }, [loggedIn]);
 
-  return (
-    <div className="team-dashboard">
-      <div className="team-dashboard__main">{`Welcome ${username}!`}</div>
-      <button className="team-dashboard__button" onClick={inviteHandler}>
-        Invite a friend!
-      </button>
-      <button className="team-dashboard__button" onClick={logoutHandler}>
-        Logout
-      </button>
-    </div>
-  );
+  if (localStorage.getItem("token")) {
+    return (
+      <div className="team-dashboard">
+        <div className="team-dashboard__main">{`Welcome ${username}!`}</div>
+        <button className="team-dashboard__button" onClick={logoutHandler}>
+          Logout
+        </button>
+        {teamId ? (
+          <button className="team-dashboard__button" onClick={inviteHandler}>
+            Invite a friend!
+          </button>
+        ) : (
+          <button
+            className="team-dashboard__button"
+            onClick={() => {
+              navigate("/CreateTeam");
+            }}
+          >
+            Create Team
+          </button>
+        )}
+      </div>
+    );
+  } else {
+    navigate("/");
+  }
 };
 
 export default TeamDashboard;

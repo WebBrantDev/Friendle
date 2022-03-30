@@ -10,7 +10,6 @@ const Login = () => {
 
   useEffect(() => {
     let isMounted = true;
-    console.log(isMounted);
     if (localStorage.getItem("token")) {
       axios
         .get("http://localhost:8080/teamDashboard", {
@@ -35,18 +34,20 @@ const Login = () => {
   });
 
   const loginCall = (email, password) => {
-    axios
-      .post("http://localhost:8080/login", { email, password })
-      .then((res) => {
-        const { token } = res.data;
-        localStorage.setItem("token", token);
-      })
-      .then(() => {
-        navigate("/TeamDashboard");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (email && password) {
+      axios
+        .post("http://localhost:8080/login", { email, password })
+        .then((res) => {
+          const { token } = res.data;
+          localStorage.setItem("token", token);
+        })
+        .then(() => {
+          navigate("/TeamDashboard");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const loginHandler = (e) => {

@@ -63,7 +63,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Signup />} />
-          <Route path="/Signup/:id" element={<Signup />} />
+          <Route path="Signup/:id" element={<Signup />} />
           <Route path="Login" element={<Login />} />
           <Route path="TeamDashboard" element={<TeamDashboard />} />
           <Route path="CreateTeam" element={<CreateTeam />} />

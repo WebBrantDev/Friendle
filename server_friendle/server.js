@@ -10,6 +10,7 @@ const createTeamRoute = require("./routes/createTeam");
 const addEntryRoute = require("./routes/addEntry");
 const teamDashboardRoute = require("./routes/teamDashboard");
 const joinTeamRoute = require("./routes/joinTeam");
+const testUsernameRoute = require("./routes/testUsername");
 
 const app = express();
 const SERVER_PORT = process.env.SERVER_PORT || 8080;
@@ -24,6 +25,7 @@ app.use("/createTeam", createTeamRoute);
 app.use("/addEntry", addEntryRoute);
 app.use("/teamDashboard", teamDashboardRoute);
 app.use("/joinTeam", joinTeamRoute);
+app.use("/testUsername", testUsernameRoute);
 
 app.listen(SERVER_PORT, () => {
   console.log(`Listening on http://localhost:${SERVER_PORT}`);

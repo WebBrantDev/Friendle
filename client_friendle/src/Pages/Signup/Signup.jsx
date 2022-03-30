@@ -1,10 +1,21 @@
 import "./Signup.scss";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const Signup = () => {
   let navigate = useNavigate();
   let params = useParams();
+
+  useEffect(() => {
+    let isMounted = true;
+    if (localStorage.getItem("token")) {
+      localStorage.removeItem("token");
+    }
+    return () => {
+      isMounted = false;
+    };
+  });
 
   const signupHandler = (e) => {
     e.preventDefault();
@@ -14,30 +25,38 @@ const Signup = () => {
     const team_id = params.id || null;
 
     axios
-      .get(`https://www.disify.com/api/email/${email}`)
+      .post("http://localhost:8080/testUsername", { username })
       .then((res) => {
-        const { format, disposable, dns } = res.data;
-        if (format && !disposable && dns) {
-          axios
-            .post("http://localhost:8080/signup", {
-              username,
-              email,
-              password,
-              team_id,
-            })
-            .then((res) => {
-              console.log(res);
-              navigate("/login");
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        } else {
-          alert("Please enter a valid email!");
+        if (res.data.isUsed) {
+          return alert("Username is taken!");
         }
-      })
-      .catch((err) => {
-        console.log(err);
+
+        axios
+          .get(`https://www.disify.com/api/email/${email}`)
+          .then((res) => {
+            const { format, disposable, dns } = res.data;
+            if (format && !disposable && dns) {
+              axios
+                .post("http://localhost:8080/signup", {
+                  username,
+                  email,
+                  password,
+                  team_id,
+                })
+                .then((res) => {
+                  console.log(res);
+                  navigate("/Login");
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            } else {
+              alert("Please enter a valid email!");
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       });
   };
 
@@ -62,8 +81,12 @@ const Signup = () => {
           name="password"
           placeholder="Password"
         />
-        <button className="login__login-button">Signup</button>
+        <button className="signup__signup-button">Signup</button>
       </form>
+      <div className="signup__text-container">
+        <p className="signup__text">Already have an account?</p>
+        <Link to="/Login">Log in</Link>
+      </div>
     </div>
   );
 };
