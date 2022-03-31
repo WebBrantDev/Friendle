@@ -1,0 +1,27 @@
+{
+  "name": "friendle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server_friendle/index.js",
+  "scripts": {
+    "start": "npm start --prefix server_friendle",
+    "setup:dev": "cd client_friendle && npm i && cd ../server_friendle && npm i && npm run migrate",
+    "server": "cd server_friendle && npm run server",
+    "server:dev": "cd server_friendle && nodemon index.js",
+    "client": "cd client_friendle && npm run start",
+    "heroku-postbuild": "npm install --prefix client_friendle && npm install --prefix server_friendle && npm run build --prefix client_friendle"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebBrantDev/Friendle.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "bugs": {
+    "url": "https://github.com/WebBrantDev/Friendle/issues"
+  },
+  "homepage": "https://github.com/WebBrantDev/Friendle#readme"
+}
