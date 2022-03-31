@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { formatBackEnd, formatFrontEnd } from "../../helpers/formatEntry";
 
-const TeamDashboard = (props) => {
+const TeamDashboard = () => {
   const [username, setUsername] = useState("");
   const [userId, setUserId] = useState("");
   const [teamId, setTeamId] = useState("");
@@ -105,7 +105,7 @@ const TeamDashboard = (props) => {
         <button
           className="team-dashboard__button"
           onClick={() => {
-            navigate("/CreateTeam");
+            navigate(`/CreateTeam/${userId}`);
           }}
         >
           Create Team

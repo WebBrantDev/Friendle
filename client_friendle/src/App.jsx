@@ -15,7 +15,7 @@ function App() {
           <Route path="Signup/:id" element={<Signup />} />
           <Route path="Login" element={<Login />} />
           <Route path="TeamDashboard" element={<TeamDashboard />} />
-          <Route path="CreateTeam" element={<CreateTeam />} />
+          <Route path="CreateTeam/:id" element={<CreateTeam />} />
         </Routes>
       </BrowserRouter>
     </div>
