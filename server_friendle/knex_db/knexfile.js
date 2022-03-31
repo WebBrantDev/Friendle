@@ -1,6 +1,6 @@
 // Update with your config settings.
 
-module.exports = {
+const connections = {
   development: {
     client: "mysql",
     connection: {
@@ -16,3 +16,8 @@ module.exports = {
     connection: process.env.JAWSDB_URL,
   },
 };
+
+module.exports =
+  process.env.NODE_ENV === "production"
+    ? connections.production
+    : connections.development;
