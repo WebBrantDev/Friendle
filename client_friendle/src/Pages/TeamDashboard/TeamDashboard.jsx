@@ -10,9 +10,8 @@ const TeamDashboard = () => {
   const [userId, setUserId] = useState("");
   const [teamId, setTeamId] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
-  const [pattern, setPattern] = useState("");
+  const [teamData, setTeamData] = useState("");
   const [gameDay, setGameDay] = useState("");
-  const [guesses, setGuesses] = useState("");
 
   let navigate = useNavigate();
 
@@ -33,11 +32,22 @@ const TeamDashboard = () => {
       );
       axios
         .post("http://localhost:8080/addEntry", formattedData)
-        .then((res) => {
-          const { game_day, num_of_guesses, guess_pattern } = res.data;
-          setPattern(formatFrontEnd(guess_pattern));
-          setGameDay(game_day);
-          setGuesses(num_of_guesses);
+        .then(() => {
+          axios
+            .post("http://localhost:8080/pullTeamData", {
+              team_id: teamId,
+              user_id: userId,
+              game_day: gameDay,
+            })
+            .then((res) => {
+              let sortedData = res.data.sort(
+                (a, b) => a.created_at - b.created_at
+              );
+              setTeamData(sortedData);
+              console.log(res.data);
+              // console.log(teamId);
+              // console.log(loggedIn);
+            });
         })
         .catch((err) => {
           console.log(err);
@@ -79,11 +89,28 @@ const TeamDashboard = () => {
           },
         })
         .then((res) => {
+          // console.log("hello");
           const { username, id, team_id } = res.data.decoded;
+          // console.log(id);
           setUsername(username);
           setUserId(id);
           setTeamId(team_id);
           setLoggedIn(true);
+          axios
+            .post("http://localhost:8080/pullTeamData", {
+              team_id,
+              user_id: id,
+              game_day: gameDay,
+            })
+            .then((res) => {
+              let sortedData = res.data.sort(
+                (a, b) => a.created_at - b.created_at
+              );
+              setTeamData(sortedData);
+              console.log(res.data);
+              // console.log(teamId);
+              // console.log(loggedIn);
+            });
         })
         .catch((err) => {
           console.log(err);
@@ -115,14 +142,18 @@ const TeamDashboard = () => {
         <input type="text" name="wordle" />
         <button>Submit</button>
       </form>
-      {pattern ? (
-        <div className="team-dashboard__entry-container">
-          <p>{gameDay}</p>
-          <p>{guesses}/6</p>
-          {pattern.map((pat) => {
+      {teamData ? (
+        <div className="team-dashboard__entries-container">
+          {teamData.map((entry) => {
             return (
-              <div key={uuidv4()} className="team-dashboard__pattern">
-                {pat}
+              <div key={uuidv4()} className="team-dashboard__entry">
+                <p>{entry.game_day}</p>
+                <p>{entry.num_of_guesses}/6</p>
+                <p>{entry.username}</p>
+                {formatFrontEnd(entry.guess_pattern).map((line) => {
+                  return <div key={uuidv4()}>{line}</div>;
+                })}
+                <p></p>
               </div>
             );
           })}
