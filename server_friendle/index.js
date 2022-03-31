@@ -1,4 +1,4 @@
-require("dotenv").config();
+if (process.env.NODE_ENV !== "production") require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
@@ -28,6 +28,15 @@ app.use("/teamDashboard", teamDashboardRoute);
 app.use("/joinTeam", joinTeamRoute);
 app.use("/testUsername", testUsernameRoute);
 app.use("/pullTeamData", pullTeamDataRoute);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("../client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(
+      path.join(__dirname, "../client_friendle", "build", "index.html")
+    );
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
