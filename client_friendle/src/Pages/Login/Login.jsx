@@ -12,7 +12,7 @@ const Login = () => {
     let isMounted = true;
     if (localStorage.getItem("token")) {
       axios
-        .get("http://localhost:8080/teamDashboard", {
+        .get("/teamDashboard", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -36,7 +36,7 @@ const Login = () => {
   const loginCall = (email, password) => {
     if (email && password) {
       axios
-        .post("http://localhost:8080/login", { email, password })
+        .post("/login", { email, password })
         .then((res) => {
           const { token } = res.data;
           localStorage.setItem("token", token);

@@ -14,7 +14,7 @@ const CreateTeam = () => {
     const user_id = params.id;
     console.log(team_name, user_id);
     axios
-      .post("http://localhost:8080/createTeam", { team_name, user_id })
+      .post("/createTeam", { team_name, user_id })
       .then((res) => {
         console.log(res.data);
         navigate("/TeamDashboard");

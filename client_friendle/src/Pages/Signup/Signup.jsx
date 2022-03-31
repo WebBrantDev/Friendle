@@ -24,39 +24,37 @@ const Signup = () => {
     const password = e.target.password.value;
     const team_id = params.id || null;
 
-    axios
-      .post("http://localhost:8080/testUsername", { username })
-      .then((res) => {
-        if (res.data.isUsed) {
-          return alert("Username is taken!");
-        }
+    axios.post("/testUsername", { username }).then((res) => {
+      if (res.data.isUsed) {
+        return alert("Username is taken!");
+      }
 
-        axios
-          .get(`https://www.disify.com/api/email/${email}`)
-          .then((res) => {
-            const { format, disposable, dns } = res.data;
-            if (format && !disposable && dns) {
-              axios
-                .post("http://localhost:8080/signup", {
-                  username,
-                  email,
-                  password,
-                  team_id,
-                })
-                .then((res) => {
-                  navigate("/Login");
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-            } else {
-              alert("Please enter a valid email!");
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      });
+      axios
+        .get(`https://www.disify.com/api/email/${email}`)
+        .then((res) => {
+          const { format, disposable, dns } = res.data;
+          if (format && !disposable && dns) {
+            axios
+              .post("/signup", {
+                username,
+                email,
+                password,
+                team_id,
+              })
+              .then((res) => {
+                navigate("/Login");
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else {
+            alert("Please enter a valid email!");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
   };
 
   return (

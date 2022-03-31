@@ -31,10 +31,10 @@ const TeamDashboard = () => {
         teamId
       );
       axios
-        .post("http://localhost:8080/addEntry", formattedData)
+        .post("/addEntry", formattedData)
         .then(() => {
           axios
-            .post("http://localhost:8080/pullTeamData", {
+            .post("/pullTeamData", {
               team_id: teamId,
               user_id: userId,
               game_day: gameDay,
@@ -83,7 +83,7 @@ const TeamDashboard = () => {
   useEffect(() => {
     if (!loggedIn) {
       axios
-        .get("http://localhost:8080/teamDashboard", {
+        .get("/teamDashboard", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -97,7 +97,7 @@ const TeamDashboard = () => {
           setTeamId(team_id);
           setLoggedIn(true);
           axios
-            .post("http://localhost:8080/pullTeamData", {
+            .post("/pullTeamData", {
               team_id,
               user_id: id,
               game_day: gameDay,
