@@ -1,0 +1,6 @@
+{
+  "root": "client_friendle/build/",
+  "routes": {
+    "/**": "index.html"
+  }
+}
