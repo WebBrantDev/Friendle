@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const knex = require("knex")(require("../knex_db/knexfile").development);
+const knex = require("knex")(require("../knex_db/knexfile"));
 
 router.post("/", (req, res) => {
   const { guess_pattern, game_day, num_of_guesses, user_id, team_id } =

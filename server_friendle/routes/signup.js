@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const knex = require("knex")(require("../knex_db/knexfile").development);
+const knex = require("knex")(require("../knex_db/knexfile"));
 const bcrypt = require("bcryptjs");
 const validate = require("../utils/validators");
 const outsideApi = require("../utils/outsideApiCalls");

@@ -1,6 +1,6 @@
 require("dotenv").config();
 const router = require("express").Router();
-const knex = require("knex")(require("../knex_db/knexfile").development);
+const knex = require("knex")(require("../knex_db/knexfile"));
 const validate = require("../utils/validators");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
